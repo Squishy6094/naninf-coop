@@ -10,7 +10,7 @@ local roomObjects = {
     {name = "start",        exitPos = {x = 0,     y = 0,    z = 1000, yaw = 0}},
     {name = "splitter",     exitPos = {x = 0,     y = 0,    z = 100,  yaw = 0}},
     {name = "ascend_right", exitPos = {x = -1600, y = 800,  z = 2400, yaw = 0}},
-    {name = "wallkick",     exitPos = {x = 0,     y = 2400, z = 4000, yaw = 0}},
+    {name = "wallkick",     exitPos = {x = 0,     y = 1600, z = 4000, yaw = 0}},
     {name = "left_bend",    exitPos = {x = 2800,  y = 0,    z = 2800, yaw = 0x4000}},
     {name = "slide",        exitPos = {x = 0,     y = -2000,z = 5600, yaw = 0}},
     {name = "spiral_decent",exitPos = {x = -1600, y = -1800,z = 0,    yaw = 0x8000}},
@@ -135,15 +135,23 @@ local function update()
     if network_is_server() and spawnNewRoom then
         spawnNewRoom = false
         spawn_room(2)
+        local checkX = math.abs(offset.x + sins(offset.yaw)*10000) > 25000
+        local checkZ = math.abs(offset.z + coss(offset.yaw)*10000) > 25000
         if math.abs(offset.y) > 8000 then
             -- Force raise/lower for safety
             spawn_room(get_room_id_with_condition(function (id, room)
                 return offset.y > 0 and (room.exitPos.y < 0) or (room.exitPos.y > 0)
             end))
-        elseif math.abs(offset.x + sins(offset.yaw)*5000) > 20000 or math.abs(offset.z + coss(offset.yaw)*5000) > 20000 then
+        elseif checkX or checkZ then
             -- Force turn for safety
+            local minAngle = (checkX and checkZ) and 0x6000 or 0x4000
+            if checkX and checkZ then
+                djui_chat_message_create("bing")
+            else
+                djui_chat_message_create("fuck")
+            end
             spawn_room(get_room_id_with_condition(function (id, room)
-                return math.abs(room.exitPos.yaw) >= 0x4000
+                return math.abs(room.exitPos.yaw) >= minAngle
             end))
         else
             -- Safe to spawn any room
