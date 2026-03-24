@@ -16,6 +16,37 @@ local roomObjects = {
     {name = "spiral_decent",exitPos = {x = -1600, y = -1800,z = 0,    yaw = 0x8000}},
 }
 
+local worldColorTable = {
+    { r = 255, g = 50,  b = 50  },
+    { r = 255, g = 100, b = 50  },
+    { r = 255, g = 255, b = 50  },
+    { r = 50,  g = 255, b = 50  },
+    { r = 50,  g = 50,  b = 255 },
+    { r = 251, g = 148, b = 220 },
+    { r = 130, g = 25,  b = 130 },
+    { r = 255, g = 255, b = 255 },
+    { r = 50,  g = 50,  b = 50  }
+}
+local worldColor = {r = 255, g = 255, b = 255}
+local worldColorTarget = {r = 255, g = 255, b = 255}
+local function set_world_color(r, g, b)
+    set_lighting_color(0, r)
+    set_lighting_color(1, g)
+    set_lighting_color(2, b)
+    set_lighting_color_ambient(0, r)
+    set_lighting_color_ambient(1, g)
+    set_lighting_color_ambient(2, b)
+    set_skybox_color(0, r)
+    set_skybox_color(1, g)
+    set_skybox_color(2, b)
+    set_fog_color(0, r)
+    set_fog_color(1, g)
+    set_fog_color(2, b)
+    set_vertex_color(0, r)
+    set_vertex_color(1, g)
+    set_vertex_color(2, b)
+end
+
 local function coords_rotate(x, y, yaw)
 
     local s = sins(yaw)
@@ -57,6 +88,16 @@ local function bhv_room_init(o)
 
     -- Make sure it's always rendered
     o.header.gfx.skipInViewCheck = true
+
+    worldColorTarget = worldColorTable[math.random(1, #worldColorTable)]
+
+    if o.oSyncID ~= 0 then
+        network_init_object(o, true, {
+            "oAnimState",
+            "oAction",
+            "oTimer",
+        })
+    end
 end
 
 local spawnNewRoom = false
@@ -132,6 +173,11 @@ local function update()
         warp_to_level(LEVEL_EMPTY, 1, 0) 
     end
 
+    worldColor.r = math.lerp(worldColor.r, worldColorTarget.r, 0.05)
+    worldColor.g = math.lerp(worldColor.g, worldColorTarget.g, 0.05)
+    worldColor.b = math.lerp(worldColor.b, worldColorTarget.b, 0.05)
+    set_world_color(worldColor.r, worldColor.g, worldColor.b)
+
     if network_is_server() and spawnNewRoom then
         spawnNewRoom = false
         spawn_room(2)
@@ -160,8 +206,9 @@ local function update()
     end
 end
 
+local lastHitPos = nil 
+local roomCount = 0
 local function mario_update(m)
-    if not network_is_server() then return end
     if is_player_active(m) == 0 then return end
 
     o = obj_get_first_with_behavior_id(id_bhvRoom)
@@ -174,11 +221,19 @@ local function mario_update(m)
             z = o.oPosZ + rz,
         }
         --spawn_non_sync_object(id_bhvSparkleSpawn, E_MODEL_NONE, endPos.x, endPos.y, endPos.z, function () end)
-        if vec3f_dist(m.pos, endPos) < 600 and o.oAction == 0 then
-            o.oAction = 1
-            if o.oAnimState ~= 2 then
-                djui_chat_message_create(tostring(vec3f_dist(m.pos, endPos)))
-                spawnNewRoom = true
+        if vec3f_dist(m.pos, endPos) < 600 then
+            if network_is_server() and o.oAction == 0 then
+                o.oAction = 1
+                if o.oAnimState ~= 2 then
+                    djui_chat_message_create(tostring(vec3f_dist(m.pos, endPos)))
+                    spawnNewRoom = true
+                end
+            end
+
+            if not lastHitPos or vec3f_dist(lastHitPos, endPos) > 300 then
+                lastHitPos = endPos
+                roomCount = roomCount + 1
+                djui_chat_message_create(tostring(roomCount))
             end
         end
 
@@ -187,6 +242,8 @@ local function mario_update(m)
 end
 
 local function level_init()
+    lastHitPos = nil
+    roomCount = 0
     offset.x = 0
     offset.y = 0
     offset.z = 0
