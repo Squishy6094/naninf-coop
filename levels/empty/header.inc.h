@@ -1,0 +1,12 @@
+extern const GeoLayout empty_area_1_geo[];
+extern const GeoLayout empty_area_1[];
+extern const Collision empty_area_1_collision[];
+extern const MacroObject empty_area_1_macro_objs[];
+extern Lights1 empty_dl_empty_mat_lights;
+extern Vtx empty_dl_Plane_mesh_layer_1_vtx_cull[8];
+extern Vtx empty_dl_Plane_mesh_layer_1_vtx_0[4];
+extern Gfx empty_dl_Plane_mesh_layer_1_tri_0[];
+extern Gfx mat_empty_dl_empty_mat[];
+extern Gfx mat_revert_empty_dl_empty_mat[];
+extern Gfx empty_dl_Plane_mesh_layer_1[];
+extern Gfx empty_dl_material_revert_render_settings[];

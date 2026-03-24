@@ -1,0 +1,23 @@
+const Collision naninf_room_splitter_collision[] = {
+	COL_INIT(),
+	COL_VERTEX_INIT(8),
+	COL_VERTEX(-300, 0, 100),
+	COL_VERTEX(-300, 0, 0),
+	COL_VERTEX(-300, 600, 0),
+	COL_VERTEX(-300, 600, 100),
+	COL_VERTEX(300, 0, 0),
+	COL_VERTEX(300, 0, 100),
+	COL_VERTEX(300, 600, 100),
+	COL_VERTEX(300, 600, 0),
+	COL_TRI_INIT(SURFACE_NOT_SLIPPERY, 8),
+	COL_TRI(0, 1, 2),
+	COL_TRI(0, 2, 3),
+	COL_TRI(4, 5, 6),
+	COL_TRI(4, 6, 7),
+	COL_TRI(1, 0, 5),
+	COL_TRI(1, 5, 4),
+	COL_TRI(7, 6, 3),
+	COL_TRI(7, 3, 2),
+	COL_TRI_STOP(),
+	COL_END()
+};

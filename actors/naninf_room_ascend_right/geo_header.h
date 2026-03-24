@@ -1,0 +1,8 @@
+extern const GeoLayout naninf_room_ascend_right_geo[];
+extern Lights1 naninf_room_ascend_right_naninf_default_lights;
+extern Vtx naninf_room_ascend_right_naninf_room_ascend_right_mesh_layer_1_vtx_cull[8];
+extern Vtx naninf_room_ascend_right_naninf_room_ascend_right_mesh_layer_1_vtx_0[86];
+extern Gfx naninf_room_ascend_right_naninf_room_ascend_right_mesh_layer_1_tri_0[];
+extern Gfx mat_naninf_room_ascend_right_naninf_default[];
+extern Gfx mat_revert_naninf_room_ascend_right_naninf_default[];
+extern Gfx naninf_room_ascend_right_naninf_room_ascend_right_mesh_layer_1[];

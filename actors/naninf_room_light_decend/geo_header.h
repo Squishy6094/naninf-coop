@@ -1,0 +1,8 @@
+extern const GeoLayout naninf_room_light_decend_geo[];
+extern Lights1 naninf_room_light_decend_f3dlite_material_001_lights;
+extern Vtx naninf_room_light_decend_naninf_room_light_decend_mesh_layer_1_vtx_cull[8];
+extern Vtx naninf_room_light_decend_naninf_room_light_decend_mesh_layer_1_vtx_0[80];
+extern Gfx naninf_room_light_decend_naninf_room_light_decend_mesh_layer_1_tri_0[];
+extern Gfx mat_naninf_room_light_decend_f3dlite_material_001[];
+extern Gfx mat_revert_naninf_room_light_decend_f3dlite_material_001[];
+extern Gfx naninf_room_light_decend_naninf_room_light_decend_mesh_layer_1[];

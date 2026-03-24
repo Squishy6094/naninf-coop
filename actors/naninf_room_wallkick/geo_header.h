@@ -1,0 +1,8 @@
+extern const GeoLayout naninf_room_wallkick_geo[];
+extern Lights1 naninf_room_wallkick_naninf_default_lights;
+extern Vtx naninf_room_wallkick_naninf_room_wallkick_mesh_layer_1_vtx_cull[8];
+extern Vtx naninf_room_wallkick_naninf_room_wallkick_mesh_layer_1_vtx_0[162];
+extern Gfx naninf_room_wallkick_naninf_room_wallkick_mesh_layer_1_tri_0[];
+extern Gfx mat_naninf_room_wallkick_naninf_default[];
+extern Gfx mat_revert_naninf_room_wallkick_naninf_default[];
+extern Gfx naninf_room_wallkick_naninf_room_wallkick_mesh_layer_1[];
