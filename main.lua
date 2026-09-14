@@ -48,13 +48,7 @@ local function set_world_color(r, g, b)
 end
 
 local function coords_rotate(x, y, yaw)
-
-    local s = sins(yaw)
-    local c = coss(yaw)
-
-    local rx = (x * c) + (y * s)
-    local ry = (-x * s) + (y * c)
-    return rx, ry
+    return (x * coss(yaw)) + (y * sins(yaw)), (-x * sins(yaw)) + (y * coss(yaw))
 end
 
 ---@param func function?
